@@ -12,7 +12,6 @@ import (
 )
 
 const version = byte(0x00)
-const walletFile = "wallet.dat"
 const addressChecksumLen = 4
 
 // Wallet stores private and public keys
@@ -72,7 +71,7 @@ func checksum(payload []byte) []byte {
 	firstSHA := sha256.Sum256(payload)
 	secondSHA := sha256.Sum256(firstSHA[:])
 
-	return secondSHA[len(secondSHA)-addressChecksumLen:]
+	return secondSHA[:addressChecksumLen]
 }
 
 func newKeyPair() (ecdsa.PrivateKey, []byte) {
